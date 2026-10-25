@@ -1,0 +1,15 @@
+TASK 1: IMAGE RESTORATION METRICS SUMMARY
+=============================================
+Input image: dataset\original_image.jpg
+Dimensions: 960x1280 pixels
+
+Metric Details:
+1. Gaussian Noise (sigma=25):
+   - Raw Noisy:        PSNR =  20.49 dB | SSIM = 0.2542
+   - Gaussian Filter:  PSNR =  27.08 dB | SSIM = 0.6857 (Effective)
+   - Median Filter:    PSNR =  25.95 dB | SSIM = 0.6617
+
+2. Salt-and-Pepper Noise (4% total impulse):
+   - Raw Noisy:        PSNR =  19.13 dB | SSIM = 0.3735
+   - Median Filter:    PSNR =  27.28 dB | SSIM = 0.8943 (Superior restoration)
+   - Gaussian Filter:  PSNR =  26.56 dB | SSIM = 0.6748 (Smears impulses)

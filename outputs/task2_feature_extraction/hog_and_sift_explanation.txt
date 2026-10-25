@@ -1,0 +1,26 @@
+TASK 2: FEATURE EXTRACTION TECHNICAL EXPLANATION
+============================================================
+
+A. WHAT THE HOG VISUALIZATION REPRESENTS:
+1. Edge Direction and Local Gradient Vectors:
+   - The HOG visualization displays line segments corresponding to dominant gradient directions.
+   - The image is divided into small connected spatial regions called 'cells' (16x16 pixels).
+   - For each pixel inside a cell, 1-D gradient orientations are compiled into a 9-bin histogram.
+2. Brightness / Magnitude Representation:
+   - Brighter line segments indicate strong edge boundaries (such as rooflines, building corners,
+     and window frames) where gradient magnitude is high.
+   - Smooth regions (like the clear sky) have negligible gradient and appear dark.
+3. Block Normalization for Photometric Invariance:
+   - Overlapping blocks of 2x2 cells normalize local contrast, making the descriptor robust
+     against changes in ambient sunlight and shadows.
+
+B. WHY SIFT IS EFFECTIVE FOR IMAGE MATCHING:
+1. Scale-Space Extrema Detection (DoG):
+   - SIFT uses Difference of Gaussians across multiple octaves to identify points that are
+     invariant to zoom and distance changes.
+2. Orientation Assignment:
+   - One or more canonical orientations are assigned to each keypoint based on local gradient directions,
+     ensuring rotation invariance.
+3. 128-Dimensional Keypoint Descriptor:
+   - 4x4 sub-regions with 8 orientation bins each yield a 128-element descriptor vector,
+     providing distinctiveness even when brightness differs between two photographs.

@@ -1,0 +1,22 @@
+TASK 1B: WATERSHED SEGMENTATION PERFORMANCE & ANALYSIS
+============================================================
+
+Dataset Nature: Complex outdoor urban landscape with sky, clouds, rainbow, buildings, and trees.
+
+Observations on Watershed Results:
+1. Over-segmentation tendency:
+   - The watershed algorithm treats pixel intensity as a topographic surface.
+   - In this photograph, subtle cloud gradients, atmospheric rainbow dispersion, and
+     tree texture produce numerous local minima.
+   - Consequently, watershed creates multiple subdivided basins in the sky and foliage,
+     leading to characteristic over-segmentation rather than clean single-object boundaries.
+
+2. Building Horizon vs Sky separation:
+   - The sharp contrast between building silhouettes and the sky is effectively identified
+     as major catchment divides.
+
+3. Practical Engineering Implication:
+   - Watershed operates best on high-contrast, well-isolated objects (such as biomedical cells
+     or coins on a flat backdrop) where Euclidean distance transform provides distinct centers.
+   - For complex outdoor natural scenes, semantic deep learning segmentation (e.g. Mask R-CNN / YOLO-Seg)
+     is far superior to purely intensity/gradient-driven morphological watershed.

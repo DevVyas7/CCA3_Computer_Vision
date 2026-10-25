@@ -1,0 +1,20 @@
+Source,Frame,Class,Confidence
+Video,0,car,0.4968
+Video,0,motorcycle,0.4759
+Video,0,motorcycle,0.4491
+Video,0,person,0.4386
+Video,0,motorcycle,0.4037
+Video,0,car,0.348
+Video,0,bicycle,0.3058
+Video,0,motorcycle,0.2927
+Video,0,person,0.2636
+Video,0,potted plant,0.2611
+Video,0,person,0.2555
+Video,0,person,0.2515
+Video,60,car,0.8753
+Video,60,car,0.8097
+Video,60,bicycle,0.379
+Video,121,car,0.8011
+Video,121,car,0.794
+Video,121,bicycle,0.5548
+Video,121,potted plant,0.3681

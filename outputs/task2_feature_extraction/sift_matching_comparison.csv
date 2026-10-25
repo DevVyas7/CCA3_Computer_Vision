@@ -1,0 +1,4 @@
+Experiment,Image1_Transform,Image1_Keypoints,Image2_Keypoints,Good_Matches,Observations
+Original_Pair_Natural_Lighting,None (Original),4607,6361,1173,Excellent matching across different lighting conditions; SIFT orientation and scale vectors remain stable.
+Rotation_Experiment,Rotated 45 degrees,4444,6361,1137,SIFT rotation invariance confirmed; dominant gradient orientation successfully compensates for 45° rotation.
+Resizing_Experiment,Resized 0.5x (Half Scale),1423,6361,512,SIFT scale invariance confirmed; fewer keypoints detected due to pixel decimation; but valid correspondences are preserved.

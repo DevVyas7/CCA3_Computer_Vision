@@ -1,0 +1,7 @@
+Condition,Filter_Applied,PSNR_dB,SSIM
+Gaussian_Noisy,None,20.49,0.2542
+Gaussian_Noisy,Gaussian_Filter_5x5,27.08,0.6857
+Gaussian_Noisy,Median_Filter_5,25.95,0.6617
+Salt_and_Pepper_Noisy,None,19.13,0.3735
+Salt_and_Pepper_Noisy,Median_Filter_5,27.28,0.8943
+Salt_and_Pepper_Noisy,Gaussian_Filter_5x5,26.56,0.6748

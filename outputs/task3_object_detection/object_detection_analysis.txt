@@ -1,0 +1,19 @@
+TASK 3: OBJECT RECOGNITION COMPARATIVE ANALYSIS
+=================================================================
+
+Method:        Viola-Jones (Haar Cascade)
+Target:        Human Faces Only
+Observed:      Photograph: 1 box(es); Video Frame 0: 0 faces
+Architecture:  Integral Images + Rectangular Haar Features + Adaboost Cascade
+Strengths:     Extremely lightweight and fast CPU execution; zero GPU or deep learning requirements.
+Limitations / Failures Observed:
+   Observed 1 False Positive on building/window lattice in photograph due to rectangular intensity symmetry; Missed pedestrians/riders in video because distant, tilted, or occluded faces lack rigid frontal Haar patterns.
+-----------------------------------------------------------------
+Method:        Ultralytics YOLO (YOLOv8n)
+Target:        80 Multi-Class Objects (COCO dataset: cars, motorcycles, persons, etc.)
+Observed:      Photograph: 0 detections; Video Frame 0: 4 objects
+Architecture:  Deep Convolutional Neural Network with C2f feature extractors and anchor-free detection head
+Strengths:     Detects diverse objects simultaneously across varying scales, orientations, and partial occlusions with high confidence.
+Limitations / Failures Observed:
+   High confidence detections require substantial model weights; does not detect non-COCO entities (such as rainbow, buildings, or cloud formations) without custom fine-tuning.
+-----------------------------------------------------------------
