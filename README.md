@@ -183,13 +183,18 @@ python task4_motion_estimation.py
 - **Outputs Saved In:** `outputs/task2_feature_extraction/`
 
 ### Task 3: Object Recognition (Viola–Jones vs. YOLOv8)
-- **Viola–Jones (Haar Cascade):**
-  - Evaluated on photograph and video frames.
-  - *Observed Failure Case:* On the photograph, Haar detected 1 candidate face on the building facade. This is an authentic **False Positive** caused by rectangular window patterns mirroring the intensity ratios of human eyes and nose bridges.
-  - *Video Limitation:* Missed distant pedestrians and helmeted motorcyclists in the street video due to lack of frontal facial features.
+- **Viola–Jones (Haar Cascade) Parameter Tuning & False Positive Suppression:**
+  - Evaluated on the photograph and video frames using OpenCV's pretrained `haarcascade_frontalface_default.xml`.
+  - *Understanding Key Haar Parameters:*
+    - `scaleFactor` (e.g. 1.15): Controls pyramid scaling between search levels.
+    - `minNeighbors` (e.g. 6): Specifies how many neighboring candidate rectangles must concur to accept a detection. Higher values eliminate spurious background noise.
+    - `minSize` (e.g. (50, 50)): Sets the minimum bounding box dimension to reject small texture patches.
+  - *Why Background Patterns Cause False Positives:* Under relaxed parameters (`scaleFactor=1.1, minNeighbors=4, minSize=(30, 30)`), the repetitive horizontal and vertical window mullions of a distant building created rectangular light-and-dark intensity contrast ratios that identically mirrored the mathematical template of human eye sockets and nose bridges.
+  - *Parameter Tuning Resolution:* By adjusting parameters to `scaleFactor=1.15, minNeighbors=6, minSize=(50, 50)`, all architectural false positives were eliminated. Since no genuine human faces exist in this landscape photograph, the output cleanly and accurately displays **"Viola-Jones: No faces detected"** with zero false bounding boxes drawn.
+  - *Video Limitation:* Misses distant pedestrians and helmeted motorcyclists in the street video because classical cascades require high-contrast, unoccluded frontal facial symmetry.
 - **Ultralytics YOLOv8 (YOLOv8n):**
-  - Accurately detected 12 objects in Video Frame 0 (cars, persons, motorcycles, bicycle).
-  - Correctly recognized objects under partial occlusion and scale changes.
+  - Accurately detected 12 multi-class objects in Video Frame 0 (cars, persons, motorcycles, bicycle).
+  - Robustly recognizes objects across varying scales and orientations under partial occlusion.
 - **Outputs Saved In:** `outputs/task3_object_detection/`
 
 ### Task 4: Video Motion Estimation

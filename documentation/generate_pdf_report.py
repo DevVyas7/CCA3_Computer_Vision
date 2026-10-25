@@ -376,11 +376,11 @@ def build_pdf_report(output_pdf_path="documentation/CCA3_Technical_Report.pdf"):
     ))
 
     task3_table = [
-        [Paragraph("<b>Attribute</b>", table_header_style), Paragraph("<b>Viola–Jones (Haar Cascade)</b>", table_header_style), Paragraph("<b>Ultralytics YOLOv8 (YOLOv8n)</b>", table_header_style)],
+        [Paragraph("<b>Attribute</b>", table_header_style), Paragraph("<b>Viola–Jones (Haar Cascade - Tuned)</b>", table_header_style), Paragraph("<b>Ultralytics YOLOv8 (YOLOv8n)</b>", table_header_style)],
         [Paragraph("Underlying Architecture", table_cell_style), Paragraph("Integral images, Haar rectangular intensity features, AdaBoost cascaded classifier", table_cell_style), Paragraph("Deep CNN with C2f feature extractors, SPPF pooling, and anchor-free detection head", table_cell_style)],
         [Paragraph("Target Classes", table_cell_style), Paragraph("Single class: Frontal Human Faces", table_cell_style), Paragraph("80 common object classes (COCO dataset)", table_cell_style)],
-        [Paragraph("Photograph Detections", table_cell_style), Paragraph("<b>1 Candidate Box (Architectural False Positive)</b>", table_cell_style), Paragraph("0 COCO objects detected (True Negative)", table_cell_style)],
-        [Paragraph("Video Frame 0 Detections", table_cell_style), Paragraph("0 Faces detected (Missed distant/helmeted riders)", table_cell_style), Paragraph("<b>12 Multi-Class Objects</b> (4 persons, 4 motorcycles, 2 cars, 1 bicycle, 1 potted plant)", table_cell_style)],
+        [Paragraph("Photograph Detections", table_cell_style), Paragraph("<b>0 Faces Detected (Clean 'No faces detected' badge)</b>", table_cell_style), Paragraph("0 COCO objects detected (True Negative)", table_cell_style)],
+        [Paragraph("Video Frame 0 Detections", table_cell_style), Paragraph("0 Faces detected (Misses distant/helmeted riders)", table_cell_style), Paragraph("<b>12 Multi-Class Objects</b> (4 persons, 4 motorcycles, 2 cars, 1 bicycle, 1 potted plant)", table_cell_style)],
         [Paragraph("Inference Latency", table_cell_style), Paragraph("~5 ms per frame (CPU)", table_cell_style), Paragraph("~150 ms (CPU) / ~8 ms (GPU)", table_cell_style)],
         [Paragraph("Model Size / Weights", table_cell_style), Paragraph("~900 KB XML file", table_cell_style), Paragraph("6.2 MB PyTorch weights file", table_cell_style)]
     ]
@@ -396,25 +396,26 @@ def build_pdf_report(output_pdf_path="documentation/CCA3_Technical_Report.pdf"):
     story.append(Spacer(1, 10))
 
     story.append(Paragraph(
-        "<b>Investigation of Genuine Failure Modes:</b><br/>"
-        "1. <i>Haar False Positive:</i> On the landscape photograph, Viola–Jones produced a false positive detection on the repetitive window "
-        "grid of a distant building. This failure occurs because horizontal and vertical building mullions create rectangular dark-light contrast ratios "
-        "that identically mimic the mathematical template of human eye sockets and nose bridges.<br/>"
-        "2. <i>Haar False Negatives:</i> In the street video, multiple pedestrians and motorcycle riders were visible, yet Haar detected zero faces. "
-        "Because classical cascades depend on rigid frontal symmetry, distant, tilted, or helmet-occluded faces fail activation thresholds.<br/>"
-        "3. <i>YOLO Generalization:</i> YOLOv8 reliably detected distant vehicles and riders under motion blur and partial occlusion, highlighting "
-        "the superiority of hierarchical deep convolutional representations.", body_style
+        "<b>Parameter Tuning and False-Positive Elimination Study:</b><br/>"
+        "1. <i>Why Background Patterns Produce False Positives:</i> Under relaxed parameters (scaleFactor=1.1, minNeighbors=4, minSize=30), "
+        "the repetitive grid of building windows produced a false positive candidate box. Because Haar cascades calculate rectangular "
+        "intensity differences (e.g. eye sockets darker than forehead/cheeks), architectural window mullions accidentally matched the face template.<br/>"
+        "2. <i>Parameter Tuning Solution:</i> By tuning parameters to scaleFactor=1.15, minNeighbors=6, and minSize=(50, 50), all spurious "
+        "architectural detections were completely suppressed. As no genuine human faces exist in this landscape photograph, the output cleanly "
+        "displays 'Viola-Jones: No faces detected' without drawing incorrect bounding boxes.<br/>"
+        "3. <i>Video Observations & YOLO Generalization:</i> On the video, classical Haar cascades detected zero faces due to distant, oblique, and "
+        "helmet-occluded subjects, whereas YOLOv8 successfully detected 12 multi-class traffic objects in Frame 0.", body_style
     ))
 
     fig_det_overview = "outputs/task3_object_detection/task3_09_detection_comparison_overview.png"
     if os.path.exists(fig_det_overview):
         story.append(Image(fig_det_overview, width=490, height=360))
-        story.append(Paragraph("<b>Figure 5:</b> Detection comparison: Haar Cascade vs YOLOv8 on the photograph and video frame 0.", caption_style))
+        story.append(Paragraph("<b>Figure 5:</b> Detection comparison: Tuned Viola-Jones vs YOLOv8 on photograph and video frame 0.", caption_style))
 
     fig_failure = "outputs/task3_object_detection/task3_10_failure_analysis_visualized.png"
     if os.path.exists(fig_failure):
         story.append(Image(fig_failure, width=490, height=210))
-        story.append(Paragraph("<b>Figure 6:</b> Close-up analysis: Haar architectural false positive (left) vs YOLO traffic detections (right).", caption_style))
+        story.append(Paragraph("<b>Figure 6:</b> Parameter tuning analysis: Relaxed false positive on window grid (left) vs tuned suppression (right).", caption_style))
 
     story.append(PageBreak())
 
